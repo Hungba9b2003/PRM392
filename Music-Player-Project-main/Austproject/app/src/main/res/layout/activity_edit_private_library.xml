@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#f1f1f1">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Music App"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="30dp"
+        android:layout_gravity="center"/>
+
+    <EditText
+        android:id="@+id/etlibTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Playlist Title:"
+        android:inputType="text"
+        android:textSize="20sp"
+        android:layout_marginBottom="20dp"/>
+
+    <ListView
+        android:id="@+id/lvTracks"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/btSaveTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Title"
+        android:textSize="16sp"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/btDeleteLib"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete Playlist"
+        android:backgroundTint="#B41D1D"
+        android:textSize="16sp"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/btgoBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Go Back"
+        android:backgroundTint="#A4A2A2"
+        android:textSize="16sp"
+        android:layout_marginBottom="10dp"/>
+
+</LinearLayout>

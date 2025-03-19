@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#f1f1f1">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Music App"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center"/>
+
+    <ImageView
+        android:id="@+id/ivAvatar"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_album_art"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:id="@+id/tvCurrentTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0:00"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:id="@+id/tvTotalTime"
+            android:text="0:00"/>
+    </LinearLayout>
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Now Playing: "
+        android:textSize="20sp"
+        android:layout_marginBottom="30dp"
+        android:layout_gravity="center"/>
+
+    <!-- Điều khiển playback -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginBottom="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <!-- Back -->
+            <ImageButton
+                android:id="@+id/btGoBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Go Back"
+                android:src="@drawable/ic_back" />
+
+            <!-- Previous -->
+            <ImageButton
+                android:id="@+id/btPrevious"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Previous Track"
+                android:src="@drawable/ic_previous" />
+
+            <!-- Play/Pause -->
+            <ImageButton
+                android:id="@+id/btPlayPause"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Play/Pause"
+                android:src="@drawable/ic_play" />
+
+            <!-- Next -->
+            <ImageButton
+                android:id="@+id/btNext"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Next Track"
+                android:src="@drawable/ic_next" />
+
+            <!-- Loop (Nhỏ hơn) -->
+            <ImageButton
+                android:id="@+id/btLoop"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="13dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Enable Loop"
+                android:src="@drawable/ic_loop" />
+
+            <!-- Save (Nhỏ hơn) -->
+            <ImageButton
+                android:id="@+id/btSave"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Save on Playlist"
+                android:src="@drawable/ic_save" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Chức năng khác -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
+
+            <TextView
+                android:id="@+id/tvLyric"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="#333333"
+                android:padding="8dp"
+                android:background="#EDEDED"
+                android:visibility="visible"/>
+        </ScrollView>
+    </LinearLayout>
+
+
+</LinearLayout>
