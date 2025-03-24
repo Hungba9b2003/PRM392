@@ -2,6 +2,7 @@ package com.example.austproject;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -54,7 +56,7 @@ public class PublicTrackPlaybackActivity extends AppCompatActivity {
         // Nhận dữ liệu từ Intent
         String trackAvatar = getIntent().getStringExtra("TRACK_AVATAR");
         String trackTitle = getIntent().getStringExtra("TRACK_TITLE");
-        int trackResource = getIntent().getIntExtra("TRACK_RESOURCE", -1);
+        String trackResource = getIntent().getStringExtra("TRACK_RESOURCE");
         ArrayList<String> trackLyric = getIntent().getStringArrayListExtra("TRACK_LYRIC");
         if (trackLyric != null && !trackLyric.isEmpty()) {
             StringBuilder lyricsText = new StringBuilder();
@@ -77,16 +79,27 @@ public class PublicTrackPlaybackActivity extends AppCompatActivity {
                 .into(avatar);
 
         // Xử lý MediaPlayer
-        if (trackResource != -1) {
-            mediaPlayer = MediaPlayer.create(this, trackResource);
-            if (mediaPlayer != null) {
-                seekBar.setMax(mediaPlayer.getDuration());
-                totalTime.setText(formatTime(mediaPlayer.getDuration()));
+        try {
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
-                // Khởi động nhạc và animation xoay ảnh
-                startMusic();
+            if (!trackResource.equals("")) {
+                mediaPlayer.setDataSource(trackResource);
+                mediaPlayer.prepareAsync();
+                mediaPlayer.setOnPreparedListener(mp -> {
+                    mp.start();
+                    seekBar.setMax(mp.getDuration());
+                    totalTime.setText(formatTime(mp.getDuration()));
+
+                    // Khởi động nhạc và animation xoay ảnh
+                    startMusic();
+                });
             }
+        } catch (IOException e) {
+            e.printStackTrace(); // In lỗi ra log để debug
+            Toast.makeText(this, "Lỗi khi tải nhạc!", Toast.LENGTH_SHORT).show();
         }
+
 
         // Sự kiện nút Play/Pause
         PlayPause.setOnClickListener(v -> togglePlayPause());

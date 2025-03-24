@@ -22,15 +22,45 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
 
     private Context context;
     private List<MusicItem> musicList;
+    private List<MusicItem> originalList; // Lưu trữ danh sách gốc để phục hồi khi cần tìm kiếm lại
 
     public MusicAdapter(Context context, List<MusicItem> musicList) {
         this.context = context;
 
-        // Trộn danh sách để lấy ngẫu nhiên
-        Collections.shuffle(musicList);
+        // Kiểm tra danh sách không bị null trước khi thao tác
+        if (musicList != null && !musicList.isEmpty()) {
+            // Trộn danh sách để lấy ngẫu nhiên
+            Collections.shuffle(musicList);
 
-        // Chỉ lấy tối đa 5 bài hát
-        this.musicList = new ArrayList<>(musicList.subList(0, Math.min(6, musicList.size())));
+            // Gán danh sách đầy đủ vào adapter
+            this.musicList = new ArrayList<>(musicList);
+            this.originalList = new ArrayList<>(musicList); // Lưu lại danh sách gốc
+        } else {
+            this.musicList = new ArrayList<>(); // Nếu null, tạo danh sách rỗng tránh lỗi
+            this.originalList = new ArrayList<>(); // Lưu danh sách rỗng
+        }
+    }
+
+    public void updateList(List<MusicItem> newList) {
+        this.musicList = newList;
+        notifyDataSetChanged();  // Cập nhật UI
+    }
+
+    // Phương thức để lọc danh sách khi tìm kiếm
+    public void filterList(String query) {
+        List<MusicItem> filteredList = new ArrayList<>();
+        if (query.isEmpty()) {
+            filteredList.addAll(originalList); // Nếu không có query, phục hồi lại danh sách ban đầu
+        } else {
+            for (MusicItem item : originalList) {
+                if (item.getName().toLowerCase().contains(query.toLowerCase())) {
+                    filteredList.add(item);
+                }
+            }
+        }
+        musicList.clear();
+        musicList.addAll(filteredList);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -52,9 +82,9 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
                 .into(holder.ivTrackImage);
 
         holder.itemView.setOnClickListener(v -> {
-            int resourceId = musicItem.getResource();
+           String resourceId = musicItem.getResource();
 
-            if (resourceId != 0) {
+            if (!resourceId.equals("")) {
                 Intent intent = new Intent(context, PublicTrackPlaybackActivity.class);
                 intent.putExtra("TRACK_TITLE", musicItem.getName());
                 intent.putExtra("TRACK_RESOURCE", resourceId);
@@ -86,3 +116,4 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         }
     }
 }
+

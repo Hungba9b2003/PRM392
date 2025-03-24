@@ -4,15 +4,24 @@ import java.util.List;
 
 public class MusicItem {
     private String name;
-    private int resource;
+    private String resource;
     private String avatar;
-    private List<String> lyric; // Đổi từ String sang List<String>
+    private List<String> lyric;
 
-    public MusicItem(String name, int resource, String avatar, List<String> lyric) {
+    // Constructor đầy đủ (giữ nguyên)
+    public MusicItem(String name, String resource, String avatar, List<String> lyric) {
         this.name = name;
         this.resource = resource;
         this.avatar = avatar;
         this.lyric = lyric;
+    }
+
+    // ✨ Constructor mới chỉ chứa tên playlist
+    public MusicItem(String name) {
+        this.name = name;
+        this.resource = "";
+        this.avatar = null;
+        this.lyric = null;
     }
 
     public String getName() {
@@ -23,11 +32,11 @@ public class MusicItem {
         return avatar;
     }
 
-    public List<String> getLyric() { // Getter mới cho lyric dạng danh sách
+    public List<String> getLyric() {
         return lyric;
     }
 
-    public int getResource() {
+    public String getResource() {
         return resource;
     }
 }

@@ -1,267 +1,4 @@
-////package com.example.austproject;
-////
-////import android.content.Context;
-////import android.content.Intent;
-////import android.content.SharedPreferences;
-////import android.os.Bundle;
-////import android.util.Log;
-////import android.view.View;
-////import android.widget.Button;
-////
-////import androidx.appcompat.app.AppCompatActivity;
-////import androidx.recyclerview.widget.LinearLayoutManager;
-////import androidx.recyclerview.widget.RecyclerView;
-////
-////import com.google.firebase.auth.FirebaseAuth;
-////import com.google.firebase.firestore.FirebaseFirestore;
-////
-////import java.util.HashMap;
-////import java.util.Map;
-////
-////public class PublicLibraryActivity extends AppCompatActivity {
-////
-////    private RecyclerView rvMusic;
-////    private Button logoutButton, privateLibraryButton;
-////
-////    private String[] tracks = {
-////            "Candlelight Red - Broken Glass",
-////            "Crossfade - Cold",
-////            "Evans Blue - Erase My Scars",
-////            "Chad Krueger - Hero",
-////            "Egypt Central - Home",
-////            "Eminem - Lose Yourself",
-////            "Eminem - Mockingbird",
-////            "Fall Of Envy - Solace",
-////            "Linkin Park - In the End",
-////            "Linkin Park - Numb",
-////            "Linkin Park - Somewhere I Belong",
-////            "Memory Of A Melody - Reach",
-////            "Moshi Moshi"
-////    };
-////
-////    private int[] trackResources = {
-////            R.raw.broken_glass,
-////            R.raw.cold,
-////            R.raw.erase_my_scars,
-////            R.raw.hero,
-////            R.raw.home,
-////            R.raw.lose_yourself,
-////            R.raw.mockingbird,
-////            R.raw.solace,
-////            R.raw.in_the_end,
-////            R.raw.numb,
-////            R.raw.somewhere_i_belong,
-////            R.raw.reach,
-////            R.raw.moshi_moshi
-////    };
-////
-////    private void saveTracksToFirestore() {
-////        FirebaseFirestore db = FirebaseFirestore.getInstance();
-////
-////        for (int i = 0; i < tracks.length; i++) {
-////            Map<String, Object> track = new HashMap<>();
-////            track.put("name", tracks[i]);
-////            track.put("resource", trackResources[i]);  // Lưu resource ID
-////
-////            db.collection("music")
-////                    .add(track)
-////                    .addOnSuccessListener(documentReference ->
-////                            Log.d("Firestore", "Track added with ID: " + documentReference.getId()))
-////                    .addOnFailureListener(e ->
-////                            Log.e("Firestore", "Error adding track", e));
-////        }
-////    }
-////
-////    @Override
-////    protected void onCreate(Bundle savedInstanceState) {
-////        super.onCreate(savedInstanceState);
-////        setContentView(R.layout.activity_public_library);
-////
-////        rvMusic = findViewById(R.id.rvMusic);
-////        privateLibraryButton = findViewById(R.id.btPrivateLibrary);
-////        logoutButton = findViewById(R.id.btLogout);
-////
-////        // Cấu hình RecyclerView
-////        rvMusic.setLayoutManager(new LinearLayoutManager(this));
-////        rvMusic.setAdapter(new MusicAdapter(this, tracks, trackResources));
-////
-////        // Xử lý nút vào thư viện riêng tư
-////        privateLibraryButton.setOnClickListener(v -> {
-////            Intent intent = new Intent(PublicLibraryActivity.this, PrivateLibraryActivity.class);
-////            startActivity(intent);
-////        });
-////
-////        // Xử lý nút Logout
-////        logoutButton.setOnClickListener(v -> {
-////            FirebaseAuth.getInstance().signOut();
-////
-////            SharedPreferences sharedPreferences = getSharedPreferences("LibPref", Context.MODE_PRIVATE);
-////            SharedPreferences.Editor editor = sharedPreferences.edit();
-////            editor.remove("user_id");
-////            editor.apply();
-////
-////            Intent intent = new Intent(PublicLibraryActivity.this, MainActivity.class);
-////            startActivity(intent);
-////            finish();
-////        });
-////    }
-////}
-//package com.example.austproject;
-//
-//import android.content.Context;
-//import android.content.Intent;
-//import android.content.SharedPreferences;
-//import android.os.Bundle;
-//import android.util.Log;
-//import android.widget.Button;
-//
-//import androidx.annotation.NonNull;
-//import androidx.appcompat.app.AppCompatActivity;
-//import androidx.recyclerview.widget.LinearLayoutManager;
-//import androidx.recyclerview.widget.RecyclerView;
-//
-//import com.google.firebase.auth.FirebaseAuth;
-//import com.google.firebase.firestore.DocumentSnapshot;
-//import com.google.firebase.firestore.FirebaseFirestore;
-//import com.google.firebase.firestore.QueryDocumentSnapshot;
-//
-//import java.util.ArrayList;
-//import java.util.HashMap;
-//import java.util.List;
-//import java.util.Map;
-//
-//public class PublicLibraryActivity extends AppCompatActivity {
-//
-//    private RecyclerView rvMusic;
-//    private Button logoutButton, privateLibraryButton,btAddMusic;
-//    private MusicAdapter adapter;
-//    private List<MusicItem> musicList = new ArrayList<>();
-//    private FirebaseFirestore db;
-//        private String[] tracks = {
-//            "Mất kết nối - Dương Domic",
-//            "Moshi Moshi -Remix",
-//            "Nơi tình yêu kết thúc - Bùi Anh Tuấn",
-//            "Đổi tư thế - Bình Gold",
-//                "Một tình yêu hai thử thách - Remix",
-//                "Ghệ đẹp - remix"
-//
-//
-//
-//    };
-//
-//    private int[] trackResources = {
-//            R.raw.matketnoi,
-//            R.raw.moshi_moshi,
-//            R.raw.noitinhyeuketthuc,
-//            R.raw.doituthe,
-//            R.raw.mottinhyeuhaithuthach,
-//            R.raw.gedep
-//    };
-//    private String[] singer = {
-//            "Dương Domic",
-//            "Remix",
-//            "Bùi Anh Tuấn",
-//            "Bình Gold",
-//            "Remix",
-//            "Remix"
-//    };
-//    private String[] avatar ={
-//            "https://photo-resize-zmp3.zadn.vn/w600_r1x1_jpeg/cover/8/c/1/6/8c166e2b9a0e45ca9a6c7bef40a81f74.jpg",
-//            "https://i1.sndcdn.com/artworks-37AqH34wk1mkTt5J-CHZkzA-t500x500.jpg",
-//            "https://i.ytimg.com/vi/4S0jwsH7WYw/maxresdefault.jpg",
-//            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoa0-mxdrGOkuibqzAEtGJ_fUkx_sHeSQ66w&s",
-//            "https://avatar-ex-swe.nixcdn.com/song/2023/08/16/e/0/3/5/1692160392297_640.jpg",
-//            "https://avatar-ex-swe.nixcdn.com/song/2021/03/24/0/5/7/d/1616557041416_640.jpg"
-//
-//    };
-//
-//    private void saveTracksToFirestore() {
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//
-//        for (int i = 0; i < tracks.length; i++) {
-//            Map<String, Object> track = new HashMap<>();
-//            track.put("name", tracks[i]);
-//            track.put("resource", trackResources[i]);  // Lưu resource ID
-//            track.put("singer", singer[i]);
-//            track.put("avatar", avatar[i]);
-//            db.collection("music")
-//                    .add(track)
-//                    .addOnSuccessListener(documentReference ->
-//                            Log.d("Firestore", "Track added with ID: " + documentReference.getId()))
-//                    .addOnFailureListener(e ->
-//                            Log.e("Firestore", "Error adding track", e));
-//        }
-//    }
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_public_library);
-////        saveTracksToFirestore();
-//        rvMusic = findViewById(R.id.rvMusic);
-//        privateLibraryButton = findViewById(R.id.btPrivateLibrary);
-//        logoutButton = findViewById(R.id.btLogout);
-//
-//        // Cấu hình RecyclerView
-//        adapter = new MusicAdapter(this, musicList);
-//        rvMusic.setLayoutManager(new LinearLayoutManager(this));
-//        rvMusic.setAdapter(adapter);
-//
-//        db = FirebaseFirestore.getInstance();
-//
-//        // Lấy dữ liệu từ Firestore
-//        fetchMusicFromFirestore();
-//        privateLibraryButton.setOnClickListener(v -> {
-//            Intent intent = new Intent(PublicLibraryActivity.this, PrivateLibraryActivity.class);
-//            startActivity(intent);
-//        });
-//        // Xử lý nút vào thư viện riêng tư
-//        privateLibraryButton.setOnClickListener(v -> {
-//            Intent intent = new Intent(PublicLibraryActivity.this, PrivateLibraryActivity.class);
-//            startActivity(intent);
-//        });
-//
-//        // Xử lý nút Logout
-//        logoutButton.setOnClickListener(v -> {
-//            FirebaseAuth.getInstance().signOut();
-//
-//            SharedPreferences sharedPreferences = getSharedPreferences("LibPref", Context.MODE_PRIVATE);
-//            SharedPreferences.Editor editor = sharedPreferences.edit();
-//            editor.remove("user_id");
-//            editor.apply();
-//
-//            Intent intent = new Intent(PublicLibraryActivity.this, MainActivity.class);
-//            startActivity(intent);
-//            finish();
-//        });
-//
-////        btAddMusic = findViewById(R.id.btAddMusic);
-////        btAddMusic.setOnClickListener(v -> {
-////            Intent intent = new Intent(PublicLibraryActivity.this, AddMusicActivity.class);
-////            startActivity(intent);
-////        });
-//    }
-//
-//    private void fetchMusicFromFirestore() {
-//        db.collection("music")
-//                .get()
-//                .addOnCompleteListener(task -> {
-//                    if (task.isSuccessful()) {
-//                        musicList.clear();
-//                        for (QueryDocumentSnapshot document : task.getResult()) {
-//                            String name = document.getString("name");
-//                            int resource = document.getLong("resource").intValue();  // Chuyển resource ID từ Firestore
-//                            String avatar = document.getString("avatar");
-//                            String lyric = document.getString("lyric");
-//                            musicList.add(new MusicItem(name, resource, avatar,lyric));
-//                        }
-//                        adapter.notifyDataSetChanged();
-//                    } else {
-//                        Log.e("Firestore", "Lỗi khi lấy dữ liệu", task.getException());
-//                    }
-//                });
-//    }
-//}
-//
+
 package com.example.austproject;
 
 import android.app.AlertDialog;
@@ -274,6 +11,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -282,11 +20,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -295,54 +35,41 @@ import java.util.UUID;
 public class PublicLibraryActivity extends AppCompatActivity {
     private ImageButton btnAddPlaylist ;
     private RecyclerView rvRecent, rvPlaylist, rvSuggestions;
-    private Button logoutButton, privateLibraryButton, btFavorites, btArtists;
-    private MusicAdapter musicAdapter, recentAdapter, playlistAdapter, suggestionAdapter;
+    private Button logoutButton, btFavorites, btArtists;
+    private MusicAdapter musicAdapter, recentAdapter, suggestionAdapter;
     private List<MusicItem> musicList = new ArrayList<>(), recentList = new ArrayList<>(),
-            playlist = new ArrayList<>(), suggestions = new ArrayList<>();
+            suggestions = new ArrayList<>();
+    private List<PlaylistItem> playlist = new ArrayList<>();
+    private SearchView searchView;
+    private PlaylistAdapter playlistAdapter;
     private FirebaseFirestore db;
-
+    private List<MusicItem> filteredMusicList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_public_library);
 
-//        rvMusic = findViewById(R.id.rvMusic);
-        rvRecent = findViewById(R.id.rvRecentSongs);
+        setContentView(R.layout.activity_public_library);
         rvPlaylist = findViewById(R.id.rvPlaylists);
         rvSuggestions = findViewById(R.id.rvSuggestedSongs);
-        privateLibraryButton = findViewById(R.id.btPrivateLibrary);
         logoutButton = findViewById(R.id.btLogout);
         btFavorites = findViewById(R.id.btFavorites);
         btArtists = findViewById(R.id.btArtists);
         btnAddPlaylist = findViewById(R.id.btnAddPlaylist);
-        // Cấu hình RecyclerView
-//        rvMusic.setLayoutManager(new LinearLayoutManager(this));
-//        rvMusic.setAdapter(musicAdapter = new MusicAdapter(this, musicList));
-
-        rvRecent.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rvRecent.setAdapter(recentAdapter = new MusicAdapter(this, recentList));
+//        searchView = findViewById(R.id.searchView);
+//        // Cấu hình RecyclerView
 
         rvPlaylist.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rvPlaylist.setAdapter(playlistAdapter = new MusicAdapter(this, playlist));
+        rvPlaylist.setAdapter(playlistAdapter = new PlaylistAdapter(this, playlist));
 
         rvSuggestions.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        rvSuggestions.setAdapter(suggestionAdapter = new MusicAdapter(this, suggestions));
+        rvSuggestions.setAdapter(suggestionAdapter = new MusicAdapter(this, musicList));
 
         db = FirebaseFirestore.getInstance();
 
         fetchMusicFromFirestore();
-//        try {
-//            fetchRecentMusic();
-//        } catch (Exception e) {  // Cần truyền một biến vào catch
-//            Log.e("MusicApp", "Lỗi khi lấy danh sách nhạc", e);
-//        }
 
-//        fetchPlaylist();
+        fetchPlaylists();
         fetchSuggestions();
-
-        privateLibraryButton.setOnClickListener(v -> startActivity(new Intent(this, PrivateLibraryActivity.class)));
-//        btFavorites.setOnClickListener(v -> startActivity(new Intent(this, FavoritesActivity.class)));
-//        btArtists.setOnClickListener(v -> startActivity(new Intent(this, ArtistActivity.class)));
 
         logoutButton.setOnClickListener(v -> {
             SharedPreferences sharedPreferences = getSharedPreferences("LibPref", Context.MODE_PRIVATE);
@@ -353,7 +80,39 @@ public class PublicLibraryActivity extends AppCompatActivity {
             finish();
         });
         btnAddPlaylist.setOnClickListener(v -> showAddPlaylistDialog());
+//        searchView = findViewById(R.id.searchView);
+//        if (searchView != null) {
+//            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//                @Override
+//                public boolean onQueryTextSubmit(String query) {
+//                    return false;
+//                }
+//
+//                @Override
+//                public boolean onQueryTextChange(String newText) {
+//                    // handle query text change
+//                    return false;
+//                }
+//            });
+//        } else {
+//            Log.e("SearchView", "SearchView is null, check layout XML.");
+//        }
 
+    }
+    private void filterMusicList(String query) {
+        filteredMusicList.clear();
+        if (query.isEmpty()) {
+            // Nếu không có từ khóa tìm kiếm, hiển thị tất cả
+            filteredMusicList.addAll(musicList);
+        } else {
+            // Nếu có từ khóa tìm kiếm, lọc danh sách nhạc
+            for (MusicItem item : musicList) {
+                if (item.getName().toLowerCase().contains(query.toLowerCase())) {
+                    filteredMusicList.add(item);
+                }
+            }
+        }
+        musicAdapter.notifyDataSetChanged();  // Cập nhật adapter sau khi lọc
     }
 
     private void fetchMusicFromFirestore() {
@@ -375,10 +134,23 @@ public class PublicLibraryActivity extends AppCompatActivity {
                                 lyric = new ArrayList<>();
                             }
 
-                            int resource = getResourceByName(name);
-
+                            String resource = document.getString("resource");
+//                            if (resource == 0) {
+//                                if (document.contains("resource")) {
+//                                    Long resLong = document.getLong("resource"); // Lấy giá trị Long từ Firestore
+//                                    if (resLong != null && resLong <= Integer.MAX_VALUE && resLong >= Integer.MIN_VALUE) {
+//                                        resource = resLong.intValue(); // Chuyển từ Long sang int an toàn
+//                                    } else {
+//                                        resource = -1; // Giá trị mặc định nếu quá lớn hoặc null
+//                                    }
+//                                } else {
+//                                    resource = -1; // Giá trị mặc định nếu không có trường "resource"
+//                                }
+//                            }
                             musicList.add(new MusicItem(name, resource, avatar, lyric));
                         }
+                        Log.d("Firestore", "🎶 Số bài hát trong danh sách sau khi fetch: " + musicList.toString() );
+
 
                         // KIỂM TRA: Nếu `musicAdapter` chưa được tạo -> Khởi tạo và set cho RecyclerView
                         if (musicAdapter == null) {
@@ -393,6 +165,8 @@ public class PublicLibraryActivity extends AppCompatActivity {
                     }
                 });
     }
+
+
     private void showAddPlaylistDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Create New Playlist");
@@ -414,38 +188,65 @@ public class PublicLibraryActivity extends AppCompatActivity {
 
         builder.show();
     }
+
     private void savePlaylistToFirebase(String playlistName) {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
-        if (user == null) {
+        SharedPreferences sharedPreferences = getSharedPreferences("LibPref", Context.MODE_PRIVATE);
+        String userEmail = sharedPreferences.getString("user_email", null);
+
+        if (userEmail == null) {
             Toast.makeText(this, "Please log in first", Toast.LENGTH_SHORT).show();
             return;
         }
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        String userId = user.getUid();
 
-        // Tạo một document trong "playLists" bên trong collection "account"
-        DocumentReference userAccountRef = db.collection("account").document(userId);
+        // 🔥 Tìm accountId dựa vào email
+        db.collection("accounts")
+                .whereEqualTo("email", userEmail)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        for (QueryDocumentSnapshot document : querySnapshot) {
+                            String accountId = document.getId(); // Lấy accountId từ Firestore
+                            DocumentReference userRef = db.collection("accounts").document(accountId);
 
-        // Tạo ID ngẫu nhiên cho playlist
-        String playlistId = UUID.randomUUID().toString();
+                            // 🔥 Bước 1: Lấy danh sách playLists hiện tại
+                            userRef.get()
+                                    .addOnSuccessListener(documentSnapshot -> {
+                                        List<Map<String, Object>> playLists = (List<Map<String, Object>>) documentSnapshot.get("playLists");
 
-        // Dữ liệu của playlist
-        Map<String, Object> playlistData = new HashMap<>();
-        playlistData.put("name", playlistName);
-        playlistData.put("createdAt", FieldValue.serverTimestamp());
+                                        if (playLists == null) {
+                                            playLists = new ArrayList<>(); // Nếu null thì tạo mới
+                                        }
 
-        // Lưu vào Firestore
-        userAccountRef.collection("playLists").document(playlistId)
-                .set(playlistData)
-                .addOnSuccessListener(aVoid ->
-                        Toast.makeText(this, "Playlist created successfully!", Toast.LENGTH_SHORT).show())
-                .addOnFailureListener(e ->
-                        Toast.makeText(this, "Failed to create playlist", Toast.LENGTH_SHORT).show());
+                                        // 🔥 Bước 2: Thêm playlist mới vào danh sách
+                                        Map<String, Object> newPlaylist = new HashMap<>();
+                                        newPlaylist.put("id", UUID.randomUUID().toString()); // ID ngẫu nhiên
+                                        newPlaylist.put("name", playlistName);
+                                        newPlaylist.put("createdAt", new Date()); // 🔥 Thay thế FieldValue.serverTimestamp()
+
+                                        playLists.add(newPlaylist);
+
+                                        // 🔥 Bước 3: Cập nhật danh sách playLists lên Firestore
+                                        userRef.update("playLists", playLists)
+                                                .addOnSuccessListener(aVoid ->
+                                                        Toast.makeText(this, "Playlist added successfully!", Toast.LENGTH_SHORT).show()
+                                                )
+                                                .addOnFailureListener(e ->
+                                                        Toast.makeText(this, "Failed to add playlist: " + e.getMessage(), Toast.LENGTH_SHORT).show()
+                                                );
+                                    });
+
+                            return; // Thoát vòng lặp sau khi xử lý
+                        }
+                    } else {
+                        Toast.makeText(this, "User account not found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Error retrieving account: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
-
-
 
 
     private void fetchRecentMusic() {
@@ -460,18 +261,46 @@ public class PublicLibraryActivity extends AppCompatActivity {
         });
     }
 //
-//    private void fetchPlaylist() {
-//        db.collection("playlists").get().addOnCompleteListener(task -> {
-//            if (task.isSuccessful()) {
-//                playlist.clear();
-//                for (QueryDocumentSnapshot document : task.getResult()) {
-//                    playlist.add(getMusicItem(document));
-//                }
-//                playlistAdapter.notifyDataSetChanged();
-//            }
-//        });
-//    }
+private void fetchPlaylists() {
+    SharedPreferences sharedPreferences = getSharedPreferences("LibPref", Context.MODE_PRIVATE);
+    String userEmail = sharedPreferences.getString("user_email", null);
 
+    if (userEmail == null) {
+        Toast.makeText(this, "Please log in first", Toast.LENGTH_SHORT).show();
+        return;
+    }
+
+    db.collection("accounts")
+            .whereEqualTo("email", userEmail)
+            .get()
+            .addOnSuccessListener(querySnapshot -> {
+                if (!querySnapshot.isEmpty()) {
+                    DocumentSnapshot userDoc = querySnapshot.getDocuments().get(0);
+                    List<Map<String, Object>> playLists = (List<Map<String, Object>>) userDoc.get("playLists");
+
+                    playlist.clear();
+                    if (playLists != null) {
+                        for (Map<String, Object> playlistMap : playLists) {
+                            String playlistName = (String) playlistMap.get("name");
+                            String playlistId = (String) playlistMap.get("id");
+
+                            if (playlistName != null && playlistId != null) {
+                                playlist.add(new PlaylistItem(playlistId, playlistName));
+                            }
+                        }
+                    }
+
+                    playlistAdapter.notifyDataSetChanged();
+                    Log.d("Playlist", "Số lượng playlist: " + playlist.size());
+                } else {
+                    Toast.makeText(PublicLibraryActivity.this, "User not found", Toast.LENGTH_SHORT).show();
+                }
+            })
+            .addOnFailureListener(e -> {
+                Toast.makeText(PublicLibraryActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("Playlist", "Error fetching playlists", e);
+            });
+}
 
     private void fetchSuggestions() {
         db.collection("music").get().addOnCompleteListener(task -> {
@@ -492,12 +321,12 @@ public class PublicLibraryActivity extends AppCompatActivity {
         });
     }
 
-    private MusicItem getMusicItem(QueryDocumentSnapshot document) {
+    private MusicItem getMusicItem(DocumentSnapshot document) { // Chấp nhận cả DocumentSnapshot
         return new MusicItem(
                 document.getString("name"),
-                document.getLong("resource").intValue(),
+                document.getString("resource"), // Kiểm tra null
                 document.getString("avatar"),
-                (List<String>) document.get("lyric") // Sửa tại đây: lấy List<String>
+                document.contains("lyric") ? (List<String>) document.get("lyric") : new ArrayList<>() // Kiểm tra null
         );
     }
     private int getResourceByName(String trackName) {

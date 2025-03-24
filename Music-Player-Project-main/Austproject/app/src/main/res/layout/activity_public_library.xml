@@ -16,6 +16,12 @@
         android:layout_marginBottom="20dp"
         android:layout_gravity="center"/>
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:queryHint="Search music" />
+
     <!-- Top Buttons: Favorites, Downloaded, Artists -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,19 +53,19 @@
     </LinearLayout>
 
     <!-- Recent Songs Section -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Recently Played"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="8dp"/>
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Recently Played"-->
+<!--        android:textSize="18sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:layout_marginBottom="8dp"/>-->
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvRecentSongs"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginBottom="16dp"/>
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/rvRecentSongs"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="100dp"-->
+<!--        android:layout_marginBottom="16dp"/>-->
 
     <!-- Playlists Section -->
     <LinearLayout
@@ -97,7 +103,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Suggested Songs"
+        android:text="Songs"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginBottom="8dp"/>
@@ -105,19 +111,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSuggestedSongs"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_height="321dp"
+        android:layout_marginBottom="20dp" />
 
     <!-- Private Library & Logout Buttons -->
-    <Button
-        android:id="@+id/btPrivateLibrary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Go to Private Libraries"
-        android:backgroundTint="#B41D1D"
-        android:textSize="16sp"
-        android:layout_marginBottom="10dp"/>
-
     <Button
         android:id="@+id/btLogout"
         android:layout_width="match_parent"
